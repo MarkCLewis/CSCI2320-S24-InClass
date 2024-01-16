@@ -15,8 +15,8 @@ public class ArraySeq<E> implements Seq<E> {
 
   @Override
   public void add(E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'add'");
+    data[numElems] = elem;
+    numElems++;
   }
 
   @Override
@@ -33,8 +33,7 @@ public class ArraySeq<E> implements Seq<E> {
 
   @Override
   public E get(int index) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'get'");
+    return data[index];
   }
 
   @Override
