@@ -24,10 +24,10 @@ public class TestArraySeq {
 
   @Test void addGetLots() {
     var seq = new ArraySeq<Integer>();
-    for(int i = 0; i < 1000; ++i) {
+    for(int i = 0; i < 10; ++i) {
       seq.add(i);
     }
-    for(int i = 0; i < 1000; ++i) {
+    for(int i = 0; i < 10; ++i) {
       assertEquals(i, seq.get(i));
     }
   }

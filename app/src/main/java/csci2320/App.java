@@ -3,6 +3,10 @@
  */
 package csci2320;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.TreeMap;
+
 public class App {
     public String getGreeting() {
         return "Hello World!";
@@ -10,5 +14,24 @@ public class App {
 
     public static void main(String[] args) {
         System.out.println(new App().getGreeting());
+        Map<String, Double> values = new TreeMap<>();
+        // code using values
+
+
+        String str = "three";
+        int number = 0;
+        switch(str) {
+            case "one":
+                number = 1;
+                break;
+            case "two":
+                number = 2;
+                break;
+            case "three":
+                number = 3;
+                break;
+            default:
+                number = 4;
+        }
     }
 }
