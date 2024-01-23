@@ -15,14 +15,32 @@ public class ArraySeq<E> implements Seq<E> {
 
   @Override
   public void add(E elem) {
+    if (numElems >= data.length) {
+      growArray();
+    }
     data[numElems] = elem;
     numElems++;
   }
 
+  private void growArray() {
+    @SuppressWarnings("unchecked")
+    E[] tmp = (E[])new Object[data.length * 2];
+    for(int i = 0; i < data.length; ++i) {
+      tmp[i] = data[i];
+    }
+    data = tmp;
+  }
+
   @Override
   public void insert(int index, E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    if (numElems >= data.length) {
+      growArray();
+    }
+    for (int i = numElems; i > index; --i) {
+      data[i] = data[i-1];
+    }
+    data[index] = elem;
+    numElems++;
   }
 
   @Override
@@ -38,14 +56,19 @@ public class ArraySeq<E> implements Seq<E> {
 
   @Override
   public E set(int index, E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'set'");
+    var tmp = data[index];
+    data[index] = elem;
+    return tmp;
   }
 
   @Override
   public boolean contains(E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'contains'");
+    for (int i = 0; i < numElems; ++i) {
+      if (data[i].equals(elem)) {
+        return true;
+      }
+    }
+    return false;
   }
 
   @Override
