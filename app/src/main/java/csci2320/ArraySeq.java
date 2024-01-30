@@ -9,8 +9,21 @@ public class ArraySeq<E> implements Seq<E> {
 
   @Override
   public Iterator<E> iterator() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+    return new Iterator<E>() {
+      private int i = 0;
+      @Override
+      public boolean hasNext() {
+        return i < numElems;
+      }
+
+      @Override
+      public E next() {
+        E tmp = data[i];
+        i++;
+        return tmp;
+      }
+      
+    };
   }
 
   @Override
@@ -45,8 +58,13 @@ public class ArraySeq<E> implements Seq<E> {
 
   @Override
   public E remove(int index) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'remove'");
+    E tmp = data[index];
+    for (int i = index; i < numElems - 1; ++i) {
+      data[i] = data[i + 1];
+    }
+    numElems--;
+    data[numElems] = null;
+    return tmp;
   }
 
   @Override
