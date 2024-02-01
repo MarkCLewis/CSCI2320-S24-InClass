@@ -1,6 +1,7 @@
 package csci2320;
 
 import java.util.Iterator;
+import java.util.function.Function;
 
 public class LinkedSeq<E> implements Seq<E> {
   private static class Node<E> {
@@ -15,6 +16,7 @@ public class LinkedSeq<E> implements Seq<E> {
 
   private Node<E> head = null;
   private Node<E> tail = null;
+  private int numElems = 0;
 
   @Override
   public Iterator<E> iterator() {
@@ -24,8 +26,13 @@ public class LinkedSeq<E> implements Seq<E> {
 
   @Override
   public void add(E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'add'");
+    if (tail == null) {
+      head = tail = new Node<E>(elem, null);
+    } else {
+      tail.next = new Node<E>(elem, null);
+      tail = tail.next;
+    }
+    numElems++;
   }
 
   @Override
@@ -42,14 +49,28 @@ public class LinkedSeq<E> implements Seq<E> {
 
   @Override
   public E get(int index) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'get'");
+    if (index < 0 || index >= numElems) {
+      throw new IndexOutOfBoundsException("Asked for " + index + " of " + numElems);
+    }
+    Node<E> rover = head;
+    for (int i = 0; i < index; ++i) {
+      rover = rover.next;
+    }
+    return rover.data;
   }
 
   @Override
   public E set(int index, E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'set'");
+    if (index < 0 || index >= numElems) {
+      throw new IndexOutOfBoundsException("Asked for " + index + " of " + numElems);
+    }
+    Node<E> rover = head;
+    for (int i = 0; i < index; ++i) {
+      rover = rover.next;
+    }
+    var tmp = rover.data;
+    rover.data = elem;
+    return tmp;
   }
 
   @Override
@@ -60,8 +81,14 @@ public class LinkedSeq<E> implements Seq<E> {
 
   @Override
   public int size() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'size'");
+    return numElems;
   }
   
+  public <E2> Seq<E2> map(Function<E, E2> func) {
+    Seq<E2> result = new LinkedSeq<>();
+    for (E elem: this) {
+      result.add(func.apply(elem));
+    }
+    return result;
+  }
 }
