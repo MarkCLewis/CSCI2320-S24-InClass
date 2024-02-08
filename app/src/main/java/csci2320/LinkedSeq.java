@@ -3,7 +3,7 @@ package csci2320;
 import java.util.Iterator;
 import java.util.function.Function;
 
-public class LinkedSeq<E> implements Seq<E> {
+public final class LinkedSeq<E> implements Seq<E> {
   private static class Node<E> {
     E data;
     Node<E> next;
@@ -33,7 +33,6 @@ public class LinkedSeq<E> implements Seq<E> {
         rover = rover.next;
         return tmp;
       }
-
     };
   }
 
