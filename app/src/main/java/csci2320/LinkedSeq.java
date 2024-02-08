@@ -20,8 +20,21 @@ public class LinkedSeq<E> implements Seq<E> {
 
   @Override
   public Iterator<E> iterator() {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'iterator'");
+    return new Iterator<E>() {
+      Node<E> rover = head;
+      @Override
+      public boolean hasNext() {
+        return rover != null;
+      }
+
+      @Override
+      public E next() {
+        var tmp = rover.data;
+        rover = rover.next;
+        return tmp;
+      }
+
+    };
   }
 
   @Override
@@ -37,14 +50,44 @@ public class LinkedSeq<E> implements Seq<E> {
 
   @Override
   public void insert(int index, E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'insert'");
+    if (index < 0 || index > numElems) {
+      throw new IndexOutOfBoundsException("Asked for " + index + " of " + numElems);
+    }
+    numElems++;
+    if (index == 0) {
+      head = new Node<E>(elem, head);
+      if (tail == null) tail = head;
+    } else {
+      Node<E> rover = head;
+      for (int i = 0; i < index-1; ++i) {
+        rover = rover.next;
+      }
+      rover.next = new Node<E>(elem, rover.next);
+      if (rover == tail) tail = rover.next;
+    }
   }
 
   @Override
   public E remove(int index) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'remove'");
+    if (index < 0 || index >= numElems) {
+      throw new IndexOutOfBoundsException("Asked for " + index + " of " + numElems);
+    }
+    numElems--;
+    if (index == 0) {
+      var tmp = head.data;
+      head = head.next;
+      if (head == null) tail = null;
+      return tmp;
+    } else {
+      Node<E> rover = head;
+      for (int i = 0; i < index-1; ++i) {
+        rover = rover.next;
+      }
+      var tmp = rover.next.data;
+      rover.next = rover.next.next;
+      if (rover.next == null) tail = rover;
+      return tmp;
+    }
   }
 
   @Override
@@ -75,8 +118,9 @@ public class LinkedSeq<E> implements Seq<E> {
 
   @Override
   public boolean contains(E elem) {
-    // TODO Auto-generated method stub
-    throw new UnsupportedOperationException("Unimplemented method 'contains'");
+    Node<E> rover = head;
+    while (rover != null && !elem.equals(rover.data)) rover = rover.next;
+    return rover != null;
   }
 
   @Override

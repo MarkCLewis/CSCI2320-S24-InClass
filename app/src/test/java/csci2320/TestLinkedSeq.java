@@ -33,4 +33,6 @@ public class TestLinkedSeq {
     assertEquals(10, newSeq.get(2));
     assertEquals(18, newSeq.get(3));
   }
+
+  // (sum, x) -> sum+x
 }
