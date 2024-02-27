@@ -34,5 +34,21 @@ public class TestLinkedSeq {
     assertEquals(18, newSeq.get(3));
   }
 
+  @Test void testRemove() {
+    LinkedSeq<Integer> seq = new LinkedSeq<>();
+    seq.add(1);
+    seq.add(2);
+    seq.add(5);
+    seq.add(9);
+    assertEquals(1, seq.get(0));
+    assertEquals(2, seq.get(1));
+    assertEquals(5, seq.get(2));
+    assertEquals(9, seq.get(3));
+    assertEquals(5, seq.remove(2));
+    assertEquals(1, seq.get(0));
+    assertEquals(2, seq.get(1));
+    assertEquals(9, seq.get(2));
+  }
+
   // (sum, x) -> sum+x
 }
