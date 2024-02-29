@@ -2,7 +2,7 @@ package csci2320;
 
 public class OrderedSet<E extends Comparable<E>> implements MySet<E> {
 
-  private static class Node<E> {
+  private static class Node<E extends Comparable<E>> {
     E elem;
     Node<E> left = null, right = null;
     E min, max;
@@ -12,11 +12,11 @@ public class OrderedSet<E extends Comparable<E>> implements MySet<E> {
       max = elem;
     }
     public boolean overlapsRange(E rmin, E rmax) {
-      // TODO:
-      return true;
+      return min.compareTo(rmax) <= 0 && rmin.compareTo(max) <= 0;
     }
     public void addRange(E newElem) {
-      // TODO:
+      if (newElem.compareTo(min) < 0) min = newElem;
+      if (newElem.compareTo(max) > 0) max = newElem;
     }
   }
 
@@ -70,6 +70,17 @@ public class OrderedSet<E extends Comparable<E>> implements MySet<E> {
     OrderedSet<E> ret = new OrderedSet<>();
     allInRangeRecur(min, max, ret, root);
     return ret;
+  }
+
+  private int heightRecur(Node<E> n) {
+    if (n == null) return 0;
+    else {
+      return Math.max(heightRecur(n.left), heightRecur(n.right)) + 1;
+    }
+  }
+
+  public int height() {
+    return heightRecur(root);
   }
 
   @Override
